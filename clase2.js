@@ -80,7 +80,16 @@ function jugar() {
     console.log(`Rondas ganadas por el jugador: ${puntajeJugador}`);
     console.log(`Rondas ganadas por la computadora: ${puntajeComputadora}`);
     console.log(`Rondas empatadas: ${3 - puntajeJugador - puntajeComputadora}`);
+
+    if (puntajeJugador > puntajeComputadora) {
+        console.log("¡" + jugador.nombre + " ganó la partida!!!");
+    } else if (puntajeJugador < puntajeComputadora) {
+        console.log("La computadora ganó la partida.");
+    } else {
+        console.log("La partida es un empate.");
+    }
     console.log(`----------------------------`);
 }
 
 jugar();
+
