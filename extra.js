@@ -19,6 +19,17 @@
 // y las empezamos a declarar solo en este script
 
 
+let eleccion;
+let eleccionValida = false;
+let puntajeJugador = 0;
+let puntajeComputadora = 0;
+let rondasJugadas = 0;
+let nombre;
+let nombreValido = false;
+let nombreSoloLetras = /^[a-zA-Z]+$/;
+
+export { eleccion, eleccionValida, puntajeJugador, puntajeComputadora, rondasJugadas, nombre, nombreValido, nombreSoloLetras };
+
 
 
 

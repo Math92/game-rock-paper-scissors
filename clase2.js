@@ -1,3 +1,7 @@
+import { eleccion, eleccionValida, puntajeJugador, puntajeComputadora, rondasJugadas } from './extra.js';
+import { jugador } from './clase1.js';
+
+
 function pedirJugada() {
     let eleccion;
     let eleccionValida = false;

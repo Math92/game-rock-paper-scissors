@@ -1,5 +1,7 @@
+import { nombre, nombreValido, nombreSoloLetras } from './extra.js';
+
 function iniciarJuego() {
-      alert("¡Te doy la bienvenida al juego! Jugaremos al mejor de tres partidas.");
+      alert("¡Te doy la bienvenida al juego! Jugaremos al mejor de tres rondas.");
 
       let nombre;
       let nombreValido = false;
@@ -45,4 +47,5 @@ function iniciarJuego() {
       };
 }
 
-const jugador = iniciarJuego();
+
+export let jugador = iniciarJuego();
