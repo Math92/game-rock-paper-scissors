@@ -32,6 +32,8 @@ function jugadaRandom() {
 
 function compararJugadas(eleccionJugador, eleccionComputadora) {
     let resultadoRonda = "";
+    
+    console.log(`La eleccion de la computadora es: ${eleccionComputadora}`);
 
     if (eleccionJugador === eleccionComputadora) {
         resultadoRonda = "Esto fue un empate.";
