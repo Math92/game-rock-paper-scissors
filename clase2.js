@@ -30,10 +30,7 @@ function jugadaRandom() {
     return Math.floor(Math.random() * 3) + 1;
 }
 
-function compararJugadas() {
-    const eleccionJugador = pedirJugada();
-    const eleccionComputadora = jugadaRandom();
-
+function compararJugadas(eleccionJugador, eleccionComputadora) {
     let resultadoRonda = "";
 
     if (eleccionJugador === eleccionComputadora) {
@@ -57,19 +54,16 @@ function jugar() {
     let puntajeJugador = 0;
     let puntajeComputadora = 0;
     let rondasJugadas = 0;
-    let partidasGanadasJugador = 0;
-    let partidasGanadasComputadora = 0;
-    let partidasEmpatadas = 0;
 
     while (rondasJugadas < 3) {
-        const resultadoRonda = compararJugadas();
+        const eleccionJugador = pedirJugada();
+        const eleccionComputadora = jugadaRandom();
+        const resultadoRonda = compararJugadas(eleccionJugador, eleccionComputadora);
 
         if (resultadoRonda === "¡Genial, ganaste!") {
             puntajeJugador++;
         } else if (resultadoRonda === "Una lástima, perdiste.") {
             puntajeComputadora++;
-        } else {
-            partidasEmpatadas++;
         }
 
         rondasJugadas++;
@@ -81,21 +75,11 @@ function jugar() {
         console.log(`----------------------------`);
     }
 
-    if (puntajeJugador > puntajeComputadora) {
-        partidasGanadasJugador++;
-        console.log("¡Felicidades, ganaste la partida!");
-    } else if (puntajeJugador < puntajeComputadora) {
-        partidasGanadasComputadora++;
-        console.log("¡La computadora ha ganado la partida!");
-    } else {
-        console.log("La partida ha terminado en empate.");
-    }
-
     console.log(`----------------------------`);
     console.log(`Resultados de la partida:`);
-    console.log(`Partidas ganadas por el jugador: ${partidasGanadasJugador}`);
-    console.log(`Partidas ganadas por la computadora: ${partidasGanadasComputadora}`);
-    console.log(`Partidas empatadas: ${partidasEmpatadas}`);
+    console.log(`Rondas ganadas por el jugador: ${puntajeJugador}`);
+    console.log(`Rondas ganadas por la computadora: ${puntajeComputadora}`);
+    console.log(`Rondas empatadas: ${3 - puntajeJugador - puntajeComputadora}`);
     console.log(`----------------------------`);
 }
 
