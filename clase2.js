@@ -1,115 +1,102 @@
-/* -------------------------------------------------------------------------- */
-/*                                  FUNCION 2                                 */
-/* -------------------------------------------------------------------------- */
-// 👇 Esta funcion nos devuelve 1, 2 o 3 según la elección del usuario.
-// Hasta que el usuario ingrese un dato válido le seguimos pidiendo que elija.
-
-
 function pedirJugada() {
-    // empezamos con la variable eleccion en 0
-    let eleccion = 0;
+    let eleccion;
+    let eleccionValida = false;
 
     do {
-        // pedimos que elija una opcion válida
-        // convertimos el texto que nos llega en un número
-        // y reemplazamos en valor guardado en la variable
-        eleccion = parseInt(prompt("Ingrese para jugar: 1(piedra), 2(papel) o 3(tijera)"));
+        eleccion = prompt("Ingrese para jugar: 1(piedra), 2(papel) o 3(tijera)");
 
-        // si el dato ingresado no es válido entonces se vuelve a pedir hasta que cumpla
-    } while (isNaN(eleccion) || eleccion < 1 || eleccion > 3)
+        if (eleccion === null) {
+            alert("¡Hasta luego!");
+            throw new Error("El usuario ha cancelado el juego.");
+        }
 
-    // mostramos los datos por consola
+        eleccion = parseInt(eleccion);
+        if (!isNaN(eleccion) && eleccion >= 1 && eleccion <= 3) {
+            eleccionValida = true;
+        } else {
+            alert("Por favor, ingrese una opción válida.");
+        }
+    } while (!eleccionValida);
+
     console.log("----------------------------");
     console.log("La eleccion del jugador es:");
     console.log(eleccion);
     console.log("----------------------------");
 
-    // Retorna el valor de la eleccion
     return eleccion;
 }
 
-/* -------------------------------------------------------------------------- */
-/*                                  FUNCION 3                                 */
-/* -------------------------------------------------------------------------- */
 function jugadaRandom() {
-
-    // Math.random devuelve un número pseudoaleatorio entre 0 y 1
-    // Para obtener un número en un intervalo que incluya a los extremos:
-    // Math.random() * (max - min + 1) + min
-
-    let numero = parseInt(Math.random() * 3 + 1);
-
-    // Muestro los datos por consola
-    console.log("----------------------------");
-    console.log("La computadora saca:")
-    console.log(numero);
-    console.log("----------------------------");
-
-    // Retorna el valor de la eleccion aleatoria
-    return numero;
+    return Math.floor(Math.random() * 3) + 1;
 }
 
-
-/* -------------------------------------------------------------------------- */
-/*                                  FUNCION 4                                 */
-/* -------------------------------------------------------------------------- */
-// 👇 Esta funcion devuelve el resultado de la partida según las elecciones.
-// Comparamos la eleccion de cada uno para saber quien pierde y quien gana.
-
-
 function compararJugadas() {
-    const RESULTADOS_POSIBLES = ['¡Genial, ganaste!', 'Esto fue un empate.', 'Una lástima, perdiste.'];
-
     const eleccionJugador = pedirJugada();
     const eleccionComputadora = jugadaRandom();
 
-    // 👇 Por defecto el jugador gana
-    let resultadoRonda = RESULTADOS_POSIBLES[0];
+    let resultadoRonda = "";
 
-    // 👇 Chequeamos el caso en que empata
     if (eleccionJugador === eleccionComputadora) {
-        resultadoRonda = RESULTADOS_POSIBLES[1];
-
-        // 👇 Chequeamos los posibles casos en que pierde, sino ya sabemos que ganó
-    } else if ((eleccionJugador === 1 && eleccionComputadora === 2) ||
-        (eleccionJugador === 2 && eleccionComputadora === 3) ||
-        (eleccionJugador === 3 && eleccionComputadora === 1)) {
-        resultadoRonda = RESULTADOS_POSIBLES[2];
+        resultadoRonda = "Esto fue un empate.";
+    } else if (
+        (eleccionJugador === 1 && eleccionComputadora === 3) ||
+        (eleccionJugador === 2 && eleccionComputadora === 1) ||
+        (eleccionJugador === 3 && eleccionComputadora === 2)
+    ) {
+        resultadoRonda = "¡Genial, ganaste!";
+    } else {
+        resultadoRonda = "Una lástima, perdiste.";
     }
 
-    // Retorna la frase con el resultado de la partida
+    console.log(resultadoRonda);
+
     return resultadoRonda;
 }
 
-const resultadoDePartida = compararJugadas();
-mostrarResultado(resultadoDePartida);
+function jugar() {
+    let puntajeJugador = 0;
+    let puntajeComputadora = 0;
+    let rondasJugadas = 0;
+    let partidasGanadasJugador = 0;
+    let partidasGanadasComputadora = 0;
+    let partidasEmpatadas = 0;
 
+    while (rondasJugadas < 3) {
+        const resultadoRonda = compararJugadas();
 
-/* -------------------------------------------------------------------------- */
-/*                          CONSIGNA MESA DE TRABAJO                          */
-/* -------------------------------------------------------------------------- */
-// 1- Crear una función que reciba como parametro un texto (la frase de resultado de la partida).
-// 2- La función debe mostrar por consola el resultado de la partida.
-// 3- A su vez debe mostrar al usuario una alerta con el resutado de la partida.
-// 4- Finalmente, si el resultado fue una derrota debe mostrarle al usuario un mensaje de aliento para desearle suerte en la próxima oportunidad.
+        if (resultadoRonda === "¡Genial, ganaste!") {
+            puntajeJugador++;
+        } else if (resultadoRonda === "Una lástima, perdiste.") {
+            puntajeComputadora++;
+        } else {
+            partidasEmpatadas++;
+        }
 
-function mostrarResultado(resultado) {
-    const RESULTADOS_POSIBLES = ['¡Genial, ganaste!', 'Esto fue un empate.', 'Una lástima, perdiste.'];
-    const esResultadoPosible = RESULTADOS_POSIBLES.includes(resultado);
+        rondasJugadas++;
 
-    if(!esResultadoPosible){
-        console.log("El resultado no es posible");
-        return
+        console.log(`----------------------------`);
+        console.log(`Ronda ${rondasJugadas} - Puntajes:`);
+        console.log(`Jugador: ${puntajeJugador} puntos`);
+        console.log(`Computadora: ${puntajeComputadora} puntos`);
+        console.log(`----------------------------`);
     }
 
-    const esDerrota = resultado === RESULTADOS_POSIBLES[2];
-
-    if (esDerrota){
-        alert("sigue intentando!");
-    }   else {
-        console.log("-----------------------");
-        console.log("el resultado es:");
-        console.log(resultado);
-        console.log("-----------------------");
+    if (puntajeJugador > puntajeComputadora) {
+        partidasGanadasJugador++;
+        console.log("¡Felicidades, ganaste la partida!");
+    } else if (puntajeJugador < puntajeComputadora) {
+        partidasGanadasComputadora++;
+        console.log("¡La computadora ha ganado la partida!");
+    } else {
+        console.log("La partida ha terminado en empate.");
     }
+
+    console.log(`----------------------------`);
+    console.log(`Resultados de la partida:`);
+    console.log(`Partidas ganadas por el jugador: ${partidasGanadasJugador}`);
+    console.log(`Partidas ganadas por la computadora: ${partidasGanadasComputadora}`);
+    console.log(`Partidas empatadas: ${partidasEmpatadas}`);
+    console.log(`----------------------------`);
 }
+
+jugar();
